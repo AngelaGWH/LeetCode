@@ -1,0 +1,41 @@
+#include <set>
+class MedianFinder {
+public:
+    /** initialize your data structure here. */
+    std::multiset<int> myset;
+    MedianFinder() {
+        
+    }
+    
+    void addNum(int num) {
+        myset.insert(num);
+    }
+    
+    double findMedian() {
+        if(myset.empty())
+            return 0;
+        auto middlepos = int(myset.size()/2);
+        std::set<int>::iterator istart = myset.begin();
+        if(myset.size() % 2 == 1)
+        {
+            for(auto i = 0; i < middlepos; i++)
+                istart++;
+            return *istart;
+        }else
+        {
+            for(auto i = 0; i < middlepos-1; i++)
+                istart++;
+            auto fist = *istart;
+            istart++;
+            auto second = *istart;
+            return (fist + second)/2.0;
+        }
+    }
+};
+
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
