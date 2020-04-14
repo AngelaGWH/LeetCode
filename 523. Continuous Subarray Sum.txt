@@ -1,0 +1,45 @@
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        vector<int> sum(nums.begin(), nums.end());
+
+        for(int len = 2; len <= sum.size(); len++)
+        {
+            for(int i = 0; i < sum.size() - len + 1; i++)
+            {
+                sum[i] = sum[i] + nums[i + len - 1];
+                if(k == 0 and sum[i] == 0)
+                    return true;
+                if(k != 0 and sum[i] % k == 0)
+                    return true;
+            }
+        }
+        return false;
+    }
+};
+
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        unordered_map<int, int> mymap{{0, -1}};
+        int sum = 0;
+        int modvalue = 0;
+        for(int i = 0 ; i < nums.size(); i++)
+        {
+            sum = sum + nums[i];
+            
+            modvalue = sum;
+            if(k!=0)
+                modvalue = modvalue % k;
+            
+            if(mymap.find(modvalue) != mymap.end())
+            {
+                if(i - mymap[modvalue] > 1)
+                    return true;
+            }
+            else
+                mymap[modvalue] = i;
+        }
+        return false;
+    }
+};
