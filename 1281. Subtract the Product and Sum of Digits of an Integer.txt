@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int subtractProductAndSum(int n) {
+        string ns = std::to_string(n);
+        int product = 1;
+        int sum = 0;
+        for(int i = 0; i < ns.size(); i++)
+        {
+            int c = ns[i] - '0';
+            product = product * c;
+            sum  = sum + c;
+        }
+        return product - sum;
+    }
+};

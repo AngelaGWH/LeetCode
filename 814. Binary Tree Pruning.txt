@@ -1,0 +1,39 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* pruneTree(TreeNode* root) {
+        if(root->left)
+        {
+            if(not isValid(root->left))
+                root->left = nullptr;
+        }
+        if(root->right)
+        {
+            if(not isValid(root->right))
+                root->right = nullptr;
+        }
+        return root;
+    }
+private:
+    bool isValid(TreeNode* root)
+    {
+        if(not root)
+            return false;
+        bool result = false;
+        if(isValid(root->left) or root->val == 1 or isValid(root->right))
+            result = true;
+        if(not isValid(root->left))
+            root->left = nullptr;
+        if(not isValid(root->right))
+            root->right = nullptr;
+        return result;
+    }
+};

@@ -1,0 +1,21 @@
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode(int x) : val(x), next(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    int getDecimalValue(ListNode* head) {
+        std::bitset<30> bset;
+        while(head)
+        {
+            bset<<=1;
+            bset[0] = head->val;
+            head = head->next;
+        }
+        return bset.to_ulong();
+    }
+};
