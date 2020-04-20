@@ -1,0 +1,56 @@
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        if(obstacleGrid.size() == 0 or obstacleGrid[0].size() == 0)
+            return 0;
+        int row = obstacleGrid.size();
+        int col = obstacleGrid[0].size();
+        //below must be long, int will overflow
+        vector<vector<long>> helper(row, vector<long>(col, 0));
+        int ob_found = false;
+        
+        for(int i = 0; i < col; i++)
+        {
+            if(obstacleGrid[0][i] == 1)
+                ob_found = true;
+            if(ob_found)
+                helper[0][i] = 0;
+            else
+                helper[0][i] = 1;
+        }
+        ob_found = false;
+        for(int j = 0; j < row; j++)
+        {
+            if(obstacleGrid[j][0] == 1)
+                ob_found = true;
+            if(ob_found)
+            {
+                helper[j][0] = 0;
+            }  
+            else
+            {
+                helper[j][0] = 1;
+            }
+        }
+        for(int i = 0 ; i < row; i++)
+        {
+            for(int j = 0; j < col; j++)
+            {
+                cout<<helper[i][j]<<" ";
+            }
+            cout<<endl;
+        }
+                
+        for(int i = 1; i < row; i++)
+            for(int j = 1; j < col; j++)
+            {
+                if(obstacleGrid[i][j] == 1)
+                    continue;
+                else
+                {
+                    helper[i][j] = helper[i - 1][j] + helper[i][j - 1];
+                }
+            }
+        return helper[row -1][col-1];
+    }
+};

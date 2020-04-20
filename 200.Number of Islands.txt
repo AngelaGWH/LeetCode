@@ -1,0 +1,60 @@
+class Solution {
+    struct Point{
+        int row;
+        int col;
+        Point(int x, int y) : row(x), col(y){};
+    };
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        int row = grid.size();
+        if(row == 0)
+            return 0;
+        int col = grid[0].size();
+        if(col == 0)
+            return 0;
+        vector<vector<int>> mark;
+        for(auto i = 0; i < row; i++)
+            mark.push_back(vector<int>(col, 0));    
+        int cnt = 0;
+
+        for(int i = 0; i < row; i++)
+        {
+            for(int j = 0; j < col; j++)
+            {
+                if(grid[i][j] == '1' and mark[i][j] == 0)
+                {
+                    cout<<i<<" "<<j<<endl;
+                    find(i, j, row, col, mark, grid);
+                    cnt++;
+                }
+            } 
+        }
+        return cnt;
+    }
+private:
+    void find(int i, int j, int rowsize, int colsize, vector<vector<int>>& mark, vector<vector<char>>& grid)
+    {
+        std::queue<Point> que;
+        vector<vector<int>> direction{{1,0},{0,1},{-1,0},{0,-1}};
+        que.push(Point(i, j));
+        while(not que.empty())
+        {
+            Point p = que.front();
+            que.pop();
+            if(mark[p.row][p.col] == 1)
+                continue;
+            mark[p.row][p.col] = 1;
+            for(auto m = 0; m < 4; m++)
+            {
+                int new_row = p.row + direction[m][0];
+                int new_col = p.col + direction[m][1];
+                if(new_row >= 0 and new_row < rowsize and new_col >= 0 
+                   and new_col < colsize and grid[new_row][new_col] == '1' 
+                   and mark[new_row][new_col] != 1)
+                {
+                    que.push(Point(new_row, new_col));
+                }
+            }
+        }
+    }
+};

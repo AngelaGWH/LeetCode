@@ -1,0 +1,34 @@
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& arr) {
+        stack<int> stk;
+        stk.push(-1);
+        for(auto it = arr.end() - 1; it > arr.begin(); it--)
+        {
+            if(*it >= stk.top())
+                stk.push(*it);
+            else
+                stk.push(stk.top());
+        }
+        for(auto i = 0; i < arr.size(); i++)
+        {
+            arr[i] = stk.top();
+            stk.pop();
+        }
+        return arr;
+    }
+};
+
+class Solution {
+public:
+    vector<int> replaceElements(vector<int>& arr) {
+        int max = -1;
+        for(auto it = arr.end() - 1; it >= arr.begin(); it--)
+        {
+            int value = *it;
+            *it = max;
+            max = std::max(max, value);
+        }
+        return arr;
+    }
+};

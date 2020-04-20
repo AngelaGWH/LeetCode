@@ -1,0 +1,35 @@
+class Solution {
+public:
+    string removeOuterParentheses(string S) {
+        int cnt = 0;
+        string res;
+        int end = 0;
+        while(end < S.size())
+        {
+            cnt = 0;
+            string spart;
+            if(S[end] == '(')
+                cnt++;
+            else
+                cout<<"error"<<endl;
+            spart.push_back(S[end++]);
+            while(end < S.size())
+            {
+                if(S[end] == '(')
+                {
+                    cnt++;
+                }
+                else
+                    cnt--;
+                spart.push_back(S[end++]);
+                if(cnt == 0)
+                {
+                    cout<<spart<<endl;
+                    res = res + spart.substr(1, spart.size() - 2);
+                    break;
+                }
+            }
+        }
+        return res;
+    }
+};
